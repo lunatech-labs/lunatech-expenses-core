@@ -10,6 +10,8 @@ case class Expense(
                     category: Category,
                     comment: String,
                     attachment: Option[URI]
-                  ) {
+                  )
+{
+  require(total > 0)
 }
 

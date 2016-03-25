@@ -4,10 +4,12 @@ import java.time.LocalDateTime
 
 case class Report(expenses: Seq[Expense], submissionDate: LocalDateTime, user: User){
 
-  def addExpense(expense: Expense) = {
-    this.copy(expenses = expense +: expenses)
+  def addExpenses(newExpenses: Expense*): Report = {
+    this.copy(expenses = expenses ++ newExpenses)
   }
 
-
+  def calculateTotal: Double = {
+    expenses.foldLeft(0.0)((acc, ex) => acc + ex.total)
+  }
 
 }
