@@ -14,7 +14,9 @@ class ExpensesTest extends FlatSpec with Matchers {
 
     val report = Report(Seq.empty[Expense], nowDate, user)
 
-    val expense = Expense("merchant", 10, nowDate, Hardware, "comment", None)
+    // foo
+
+    val expense = Expense("merchant", 10, nowDate, Hardware, "comment", None) // foo
     val result = report.addExpense(expense)
 
     result should be(Report(Seq(expense), nowDate, user))
