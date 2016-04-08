@@ -6,10 +6,10 @@ import java.time.LocalDateTime
 case class Expense(
                     merchant: String,
                     total: Double,
-                    date: LocalDateTime,
-                    category: Category,
-                    comment: String,
-                    attachment: Option[URI]
+                    date: Option[LocalDateTime] = None,
+                    category: Option[Category] = None,
+                    comment: Option[String] = None,
+                    attachment: Option[URI] = None
                   )
 {
   require(total > 0)

@@ -1,0 +1,2 @@
+GET     /add                 com.lunatech.expenses.controllers.ExpenseController.addExpense
+GET     /list                com.lunatech.expenses.controllers.ExpenseController.listExpenses
