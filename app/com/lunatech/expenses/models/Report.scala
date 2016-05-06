@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 case class Report(
                    expenses: Seq[Expense],
                    submissionDate: LocalDateTime,
-                   user: User
+                   user: Option[User] = None
                  )
 {
 

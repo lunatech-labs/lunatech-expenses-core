@@ -1,2 +1,4 @@
-GET     /add                 com.lunatech.expenses.controllers.ExpenseController.addExpense
-GET     /list                com.lunatech.expenses.controllers.ExpenseController.listExpenses
+GET     /expense/add                 com.lunatech.expenses.controllers.ExpenseController.addExpense
+GET     /expense/list                com.lunatech.expenses.controllers.ExpenseController.listExpenses
+GET     /report/add                  com.lunatech.expenses.controllers.ReportController.addReport
+GET     /report/list                 com.lunatech.expenses.controllers.ReportController.listReports

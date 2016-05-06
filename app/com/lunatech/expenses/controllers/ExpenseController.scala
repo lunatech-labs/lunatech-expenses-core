@@ -1,13 +1,10 @@
 package com.lunatech.expenses.controllers
 
 import com.lunatech.expenses.core.Expense
-import com.lunatech.expenses.services.MemoryStorage
+import com.lunatech.expenses.services.MemoryRepository
 import play.api.mvc.{Action, AnyContent, Controller}
 
-
 class ExpenseController extends Controller {
-
-  var repository = new MemoryStorage()
 
   def addExpense: Action[AnyContent] = Action { request =>
 
@@ -16,12 +13,12 @@ class ExpenseController extends Controller {
       total = request.getQueryString("total").get.toDouble
     )
 
-    repository addExpense expense
+    MemoryRepository add expense
     Ok
   }
 
   def listExpenses: Action[AnyContent] = Action { request =>
-    val result: String = repository.getExpenses.toString
+    val result: String = MemoryRepository.get(Expense.getClass).toString
     Ok(result)
   }
 
