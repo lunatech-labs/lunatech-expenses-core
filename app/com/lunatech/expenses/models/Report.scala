@@ -5,9 +5,8 @@ import java.time.LocalDateTime
 case class Report(
                    expenses: Seq[Expense],
                    submissionDate: LocalDateTime,
-                   user: Option[User] = None
-                 )
-{
+                   user: User = User("", "", "") //TODO undo default
+                 ) {
 
   def addExpenses(newExpenses: Expense*): Report = {
     this.copy(expenses = expenses ++ newExpenses)

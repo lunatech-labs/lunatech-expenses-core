@@ -3,21 +3,23 @@ package com.lunatech.expenses.controllers
 import java.time.LocalDateTime
 
 import com.lunatech.expenses.core.Report
-import com.lunatech.expenses.services.MemoryRepository
+import com.lunatech.expenses.services.Repository
 import play.api.mvc.{Action, AnyContent, Controller}
 
 class ReportController extends Controller {
+
+  val repository : Repository[Report] = new Repository[Report]
 
   def addReport: Action[AnyContent] = Action { request =>
 
     val report = Report(Seq(), LocalDateTime.now())
 
-    MemoryRepository add report
+    repository add report
     Ok
   }
 
   def listReports: Action[AnyContent] = Action { request =>
-    val result: String = MemoryRepository.get(Report.getClass).toString
+    val result: String = repository.list.toString
     Ok(result)
   }
 
