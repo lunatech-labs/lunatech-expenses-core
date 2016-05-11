@@ -1,7 +1,10 @@
 package com.lunatech.expenses.controllers
 
+import java.net.URI
+
 import com.lunatech.expenses.core.{Category, Expense}
 import com.lunatech.expenses.services.Repository
+import com.lunatech.expenses.util.SimpleFormatter._
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formats._
@@ -18,9 +21,9 @@ class ExpenseController extends Controller {
         "merchant" -> text,
         "total" -> of(doubleFormat),
         "date" -> of(jodaDateTimeFormat),
-        "category" -> Category.mapping,
+        "category" -> of(format(Category.fromString)),
         "comment" -> optional(text),
-        "attachment" -> Expense.attachmentMapping
+        "attachment" -> optional(of(format(new URI(_))))
       )(Expense.apply)(Expense.unapply)
     )
 
