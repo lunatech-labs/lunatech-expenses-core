@@ -1,18 +1,18 @@
 package com.lunatech.expenses.core
 
-import java.net.URI
-import java.time.LocalDateTime
-import java.time.LocalDateTime._
+import org.joda.time.DateTime
+import org.joda.time.DateTime._
 
 case class Expense(
                     merchant: String,
                     total: Double,
-                    date: LocalDateTime = now(), //TODO remove default
-                    category: Category = Food, //TODO remove default
-                    comment: String = "",
-                    attachment: Option[URI] = None
+                    date: Option[DateTime] = Some(now()), //TODO remove default
+                    category : Category,
+                    comment: Option[String] = Some(""),
+                    attachment: Option[String] = None
                   ) {
 
   require(total > 0)
+
 }
 
