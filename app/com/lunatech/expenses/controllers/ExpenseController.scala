@@ -1,6 +1,6 @@
 package com.lunatech.expenses.controllers
 
-import com.lunatech.expenses.core.{Category, Expense}
+import com.lunatech.expenses.core.Expense
 import com.lunatech.expenses.services.Repository
 import play.api.data.Form
 import play.api.data.Forms._
@@ -17,11 +17,11 @@ class ExpenseController extends Controller {
       mapping(
         "merchant" -> text,
         "total" -> of(doubleFormat),
-        "date" -> optional(of(jodaDateTimeFormat)),
-        "category" -> Category.formMapping,
+        "date" -> of(jodaDateTimeFormat),
+        "category" -> text,
         "comment" -> optional(text),
         "attachment" -> optional(text)
-      )(Expense.apply)(Expense.unapply)
+      )(Expense.applyParams)(Expense.unapplyParams)
     )
 
     form.bindFromRequest().fold(
