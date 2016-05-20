@@ -1,21 +1,29 @@
 package com.lunatech.expenses.controllers
 
-import java.time.LocalDateTime
-
 import com.lunatech.expenses.models.Report
 import com.lunatech.expenses.services.Repository
+import org.joda.time.DateTime
+import play.api.data.Form
+import play.api.data.Forms._
+import play.api.data.format.Formats._
 import play.api.mvc.{Action, AnyContent, Controller}
 
 class ReportController extends Controller {
 
   val repository : Repository[Report] = new Repository[Report]
 
-  def addReport: Action[AnyContent] = Action { request =>
-
-    val report = Report(Seq(), LocalDateTime.now())
-
-    repository add report
-    Ok
+  def addReport: Action[AnyContent] = Action { implicit request =>
+    Form(
+      mapping(
+        "date" -> of(jodaDateTimeFormat)
+      )(ReportDTO.apply)(ReportDTO.unapply)
+    ).bindFromRequest().fold(
+      form => BadRequest(s"Binding failed '${form.errors}'"),
+      dto => {
+        repository add dto.toReport
+        Ok
+      }
+    )
   }
 
   def listReports: Action[AnyContent] = Action { request =>
@@ -23,4 +31,10 @@ class ReportController extends Controller {
     Ok(result)
   }
 
+}
+
+case class ReportDTO(date: DateTime) {
+  def toReport: Report = {
+    Report(Seq(), date)
+  }
 }

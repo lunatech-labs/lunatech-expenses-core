@@ -15,8 +15,7 @@ class ExpenseController extends Controller {
   val repository: Repository[Expense] = new Repository[Expense]
 
   def addExpense: Action[AnyContent] = Action { implicit request =>
-
-    val form = Form(
+    Form(
       mapping(
         "merchant" -> text,
         "total" -> of(doubleFormat),
@@ -25,15 +24,12 @@ class ExpenseController extends Controller {
         "comment" -> optional(text),
         "attachment" -> optional(of(format(new URI(_))))
       )(Expense.apply)(Expense.unapply)
-    )
-
-    form.bindFromRequest().fold(
-      f => BadRequest(s"Binding failed '${f.errors}'"),
-      e => {
-        repository add e
+    ).bindFromRequest().fold(
+      form => BadRequest(s"Binding failed '${form.errors}'"),
+      expense => {
+        repository add expense
         Ok
       })
-
   }
 
   def listExpenses: Action[AnyContent] = Action { request =>
@@ -42,4 +38,3 @@ class ExpenseController extends Controller {
   }
 
 }
-

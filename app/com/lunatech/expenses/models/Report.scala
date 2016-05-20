@@ -1,11 +1,11 @@
 package com.lunatech.expenses.models
 
-import java.time.LocalDateTime
+import org.joda.time.DateTime
 
 case class Report(
                    expenses: Seq[Expense],
-                   submissionDate: LocalDateTime,
-                   user: User = User("", "", "") //TODO undo default
+                   submissionDate: DateTime,
+                   user: User = User("", "", "") //TODO undo default value
                  ) {
 
   def addExpenses(newExpenses: Expense*): Report = {
