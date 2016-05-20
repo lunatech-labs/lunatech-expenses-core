@@ -1,4 +1,4 @@
-package com.lunatech.expenses.core
+package com.lunatech.expenses.models
 
 import java.time.LocalDateTime
 

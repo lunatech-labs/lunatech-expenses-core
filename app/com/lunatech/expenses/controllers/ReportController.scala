@@ -2,7 +2,7 @@ package com.lunatech.expenses.controllers
 
 import java.time.LocalDateTime
 
-import com.lunatech.expenses.core.Report
+import com.lunatech.expenses.models.Report
 import com.lunatech.expenses.services.Repository
 import play.api.mvc.{Action, AnyContent, Controller}
 

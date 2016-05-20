@@ -2,7 +2,7 @@ package com.lunatech.expenses.controllers
 
 import java.net.URI
 
-import com.lunatech.expenses.core.{Category, Expense}
+import com.lunatech.expenses.models.{Category, Expense}
 import com.lunatech.expenses.services.Repository
 import com.lunatech.expenses.util.SimpleFormatter._
 import play.api.data.Form
