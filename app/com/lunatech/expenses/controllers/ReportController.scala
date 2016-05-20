@@ -12,7 +12,7 @@ class ReportController extends Controller {
 
   val repository : Repository[Report] = new Repository[Report]
 
-  def addReport: Action[AnyContent] = Action { implicit request =>
+  def create: Action[AnyContent] = Action { implicit request =>
     Form(
       mapping(
         "date" -> of(jodaDateTimeFormat)
@@ -26,7 +26,7 @@ class ReportController extends Controller {
     )
   }
 
-  def listReports: Action[AnyContent] = Action { request =>
+  def list: Action[AnyContent] = Action { request =>
     val result: String = repository.list.toString
     Ok(result)
   }

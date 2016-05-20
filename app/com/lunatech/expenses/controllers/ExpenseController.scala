@@ -14,7 +14,7 @@ class ExpenseController extends Controller {
 
   val repository: Repository[Expense] = new Repository[Expense]
 
-  def addExpense: Action[AnyContent] = Action { implicit request =>
+  def create: Action[AnyContent] = Action { implicit request =>
     Form(
       mapping(
         "merchant" -> text,
@@ -32,7 +32,7 @@ class ExpenseController extends Controller {
       })
   }
 
-  def listExpenses: Action[AnyContent] = Action { request =>
+  def list: Action[AnyContent] = Action { request =>
     val result: String = repository.list.toString
     Ok(result)
   }
