@@ -1,6 +1,6 @@
 package com.lunatech.expenses.controllers
 
-import com.lunatech.expenses.models.Report
+import com.lunatech.expenses.models.{Report, User}
 import com.lunatech.expenses.services.Repository
 import org.joda.time.DateTime
 import play.api.data.Form
@@ -10,7 +10,7 @@ import play.api.mvc.{Action, AnyContent, Controller}
 
 class ReportController extends Controller {
 
-  val repository : Repository[Report] = new Repository[Report]
+  val repository: Repository[Report] = new Repository[Report]
 
   def create: Action[AnyContent] = Action { implicit request =>
     Form(
@@ -35,6 +35,6 @@ class ReportController extends Controller {
 
 case class ReportDTO(date: DateTime) {
   def toReport: Report = {
-    Report(Seq(), date)
+    Report(None, Seq(), date, User("", "", ""))
   }
 }

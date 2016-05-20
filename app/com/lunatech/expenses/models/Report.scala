@@ -3,9 +3,10 @@ package com.lunatech.expenses.models
 import org.joda.time.DateTime
 
 case class Report(
+                   id: Option[Int] = None,
                    expenses: Seq[Expense],
                    submissionDate: DateTime,
-                   user: User = User("", "", "") //TODO undo default value
+                   user: User
                  ) {
 
   def addExpenses(newExpenses: Expense*): Report = {
