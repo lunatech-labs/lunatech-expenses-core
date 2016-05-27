@@ -13,6 +13,9 @@ case class Expense(
                     category: Category,
                     comment: Option[String] = None,
                     attachment: Option[URI] = None
-                  ) {
+                  ) extends Entity[Expense] {
   require(total > 0)
+
+  override def withId(id: Int): Expense = this.copy(id = Some(id))
+
 }

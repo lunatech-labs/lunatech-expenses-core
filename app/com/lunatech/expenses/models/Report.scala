@@ -7,7 +7,7 @@ case class Report(
                    expenses: Seq[Expense],
                    submissionDate: DateTime,
                    user: User
-                 ) {
+                 ) extends Entity[Report] {
 
   def addExpenses(newExpenses: Expense*): Report = {
     this.copy(expenses = expenses ++ newExpenses)
@@ -17,4 +17,5 @@ case class Report(
     expenses.foldLeft(0.0)((acc, ex) => acc + ex.total)
   }
 
+  override def withId(id: Int): Report = this.copy(id = Some(id))
 }
