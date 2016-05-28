@@ -9,16 +9,12 @@ class ReportController extends CrudController[Report] {
 
   override def formMapping = mapping(
     "date" -> of(jodaDateTimeFormat)
-  )(toDTO)(fromDTO)
+  )(marshall)(unmarshall)
 
-  //TODO why necessary to compile?
-  def toDTO(date: DateTime): EntityDTO[Report] = {
-    ReportDTO.apply(date)
-  }
+  def marshall(date: DateTime): Report =
+    Report(None, Seq(), date, User("", "", ""))
 
-  def fromDTO(dto: EntityDTO[Report]): Option[(DateTime)] = dto match {
-    case castedDTO: ReportDTO => ReportDTO.unapply(castedDTO)
-    case _ => ???
-  }
+  def unmarshall(entity: Report): Option[(DateTime)] =
+    Some(entity.submissionDate)
 
 }

@@ -2,7 +2,7 @@ package com.lunatech.expenses.controllers
 
 import java.net.URI
 
-import com.lunatech.expenses.models.{Category, EntityDTO, Expense, ExpenseDTO}
+import com.lunatech.expenses.models.{Category, Expense}
 import com.lunatech.expenses.util.SimpleFormatter._
 import org.joda.time.DateTime
 import play.api.data.Forms._
@@ -17,18 +17,13 @@ class ExpenseController extends CrudController[Expense] {
     "category" -> of(format(Category.fromString)),
     "comment" -> optional(text),
     "attachment" -> optional(of(format(new URI(_))))
-  )(toDTO)(fromDTO)
+  )(marshall)(unmarshall)
 
-  //TODO why necessary to compile?
-  def toDTO(merchant: String, total: Double, date: DateTime, category: Category,
-            comment: Option[String], attachment: Option[URI]): EntityDTO[Expense] = {
-    ExpenseDTO.apply(merchant, total, date, category, comment, attachment)
-  }
+  def marshall(merchant: String, total: Double, date: DateTime, category: Category,
+               comment: Option[String], attachment: Option[URI]): Expense =
+    Expense(None, merchant, total, date, category, comment, attachment)
 
-  def fromDTO(dto: EntityDTO[Expense]): Option[(String, Double, DateTime,
-    Category, Option[String], Option[URI])] = dto match {
-      case castedDTO: ExpenseDTO => ExpenseDTO.unapply(castedDTO)
-      case _ => ???
-  }
+  def unmarshall(entity: Expense): Option[(String, Double, DateTime, Category, Option[String], Option[URI])] =
+    Some(entity.merchant, entity.total, entity.date, entity.category, entity.comment, entity.attachment)
 
 }
