@@ -1,40 +1,24 @@
 package com.lunatech.expenses.controllers
 
-import com.lunatech.expenses.models.{Report, User}
-import com.lunatech.expenses.services.Repository
+import com.lunatech.expenses.models._
 import org.joda.time.DateTime
-import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formats._
-import play.api.mvc.{Action, AnyContent, Controller}
 
-class ReportController extends Controller {
+class ReportController extends CrudController[Report] {
 
-  val repository: Repository[Report] = new Repository[Report]
+  override def formMapping = mapping(
+    "date" -> of(jodaDateTimeFormat)
+  )(toDTO)(fromDTO)
 
-  def create: Action[AnyContent] = Action { implicit request =>
-    Form(
-      mapping(
-        "date" -> of(jodaDateTimeFormat)
-      )(ReportDTO.apply)(ReportDTO.unapply)
-    ).bindFromRequest().fold(
-      form => BadRequest(s"Binding failed '${form.errors}'"),
-      dto => {
-        repository add dto.toReport
-        Ok
-      }
-    )
+  //TODO why necessary to compile?
+  def toDTO(date: DateTime): EntityDTO[Report] = {
+    ReportDTO.apply(date)
   }
 
-  def list: Action[AnyContent] = Action { request =>
-    val result: String = repository.list.toString
-    Ok(result)
+  def fromDTO(dto: EntityDTO[Report]): Option[(DateTime)] = dto match {
+    case castedDTO: ReportDTO => ReportDTO.unapply(castedDTO)
+    case _ => ???
   }
 
-}
-
-case class ReportDTO(date: DateTime) {
-  def toReport: Report = {
-    Report(None, Seq(), date, User("", "", ""))
-  }
 }

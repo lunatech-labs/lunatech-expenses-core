@@ -1,7 +1,7 @@
 package com.lunatech.expenses.models
 
-trait Entity[E <: Entity[E]] {
+trait Entity[T] {
 
-  def withId(id: Int): E
+  def withId(id: Int): T
 
 }
