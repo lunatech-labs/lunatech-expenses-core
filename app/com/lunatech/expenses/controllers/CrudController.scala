@@ -9,7 +9,7 @@ abstract class CrudController[T <: Entity[T]] extends Controller {
 
   val repository: Repository[T] = new Repository[T]
 
-  def formMapping: Mapping[T]
+  protected def formMapping: Mapping[T]
 
   def create: Action[AnyContent] = Action { implicit request =>
     Form(formMapping).bindFromRequest().fold(

@@ -4,6 +4,7 @@ import com.lunatech.expenses.models._
 import org.joda.time.DateTime
 import play.api.data.Forms._
 import play.api.data.format.Formats._
+import play.api.mvc.{Action, AnyContent}
 
 class ReportController extends CrudController[Report] {
 
@@ -11,10 +12,15 @@ class ReportController extends CrudController[Report] {
     "date" -> of(jodaDateTimeFormat)
   )(marshall)(unmarshall)
 
-  def marshall(date: DateTime): Report =
+  private def marshall(date: DateTime): Report =
     Report(None, Seq(), date, User("", "", ""))
 
-  def unmarshall(entity: Report): Option[(DateTime)] =
+  private def unmarshall(entity: Report): Option[(DateTime)] =
     Some(entity.submissionDate)
+
+  def addExpense(idRep: Int, idExp: Int): Action[AnyContent] = Action {
+    ???
+    Ok
+  }
 
 }

@@ -19,11 +19,11 @@ class ExpenseController extends CrudController[Expense] {
     "attachment" -> optional(of(format(new URI(_))))
   )(marshall)(unmarshall)
 
-  def marshall(merchant: String, total: Double, date: DateTime, category: Category,
+  private def marshall(merchant: String, total: Double, date: DateTime, category: Category,
                comment: Option[String], attachment: Option[URI]): Expense =
     Expense(None, merchant, total, date, category, comment, attachment)
 
-  def unmarshall(entity: Expense): Option[(String, Double, DateTime, Category, Option[String], Option[URI])] =
+  private def unmarshall(entity: Expense): Option[(String, Double, DateTime, Category, Option[String], Option[URI])] =
     Some(entity.merchant, entity.total, entity.date, entity.category, entity.comment, entity.attachment)
 
 }
