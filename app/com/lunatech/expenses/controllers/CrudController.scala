@@ -24,8 +24,10 @@ abstract class CrudController[T <: Entity[T]] extends Controller {
     Ok(repository.list.toString)
   }
 
-  def find(id: Int): Action[AnyContent] = Action {
-    Ok(repository.find(id).toString)
+  def find(id: Int): Action[AnyContent] = Action { request =>
+    repository.find(id).map{
+      e => Ok(e.toString)
+    }.getOrElse(NotFound)
   }
 
 }
