@@ -12,6 +12,8 @@ class Repository[T <: Entity[T]] {
     entities = entities :+ entity.withId(latestId)
   }
 
-  def list : Seq[T] = entities
+  def list: Seq[T] = entities
+
+  def find(id: Int): Option[T] = entities.find(_.id contains id)
 
 }

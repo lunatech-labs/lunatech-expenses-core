@@ -20,8 +20,12 @@ abstract class CrudController[T <: Entity[T]] extends Controller {
       })
   }
 
-  def list: Action[AnyContent] = Action { request =>
+  def list: Action[AnyContent] = Action {
     Ok(repository.list.toString)
+  }
+
+  def find(id: Int): Action[AnyContent] = Action {
+    Ok(repository.find(id).toString)
   }
 
 }
