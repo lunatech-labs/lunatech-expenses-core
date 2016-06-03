@@ -1,0 +1,8 @@
+POST    /expense/                       com.lunatech.expenses.controllers.ExpenseController.create
+GET     /expense/:id                    com.lunatech.expenses.controllers.ExpenseController.find(id: Int)
+GET     /expense/                       com.lunatech.expenses.controllers.ExpenseController.list
+
+POST    /report/                        com.lunatech.expenses.controllers.ReportController.create
+GET     /report/:id                     com.lunatech.expenses.controllers.ReportController.find(id: Int)
+GET     /report/                        com.lunatech.expenses.controllers.ReportController.list
+PUT     /report/:idRep/expense/:idExp   com.lunatech.expenses.controllers.ReportController.addExpense(idRep: Int, idExp: Int)
