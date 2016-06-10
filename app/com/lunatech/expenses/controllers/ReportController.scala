@@ -22,10 +22,10 @@ class ReportController extends CrudController[Report] {
   private def unmarshall(entity: Report): Option[(DateTime)] =
     Some(entity.submissionDate)
 
-  def addExpense(idRep: Int, idExp: Int): Action[AnyContent] = Action {
-    val report = repository.find(idRep).get
-    val expense = expenseRepository.find(idExp).get
-    val remainingExpenses = report.expenses.filterNot(_.id.contains(idExp))
+  def addExpense(idReport: Int, idExpense: Int): Action[AnyContent] = Action {
+    val report = repository.find(idReport).get
+    val expense = expenseRepository.find(idExpense).get
+    val remainingExpenses = report.expenses.filterNot(_.id.contains(idExpense))
     val updatedExpenses = remainingExpenses :+ expense
     repository.update(report.copy(expenses = updatedExpenses))
     Ok

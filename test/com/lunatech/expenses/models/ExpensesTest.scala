@@ -1,14 +1,9 @@
 package com.lunatech.expenses.models
 
-import java.time.LocalDateTime
-import java.time.LocalDateTime._
-
+import com.lunatech.expenses.util.DefaultObjects._
 import org.scalatest.{FlatSpec, Matchers}
 
 class ExpensesTest extends FlatSpec with Matchers {
-
-  val nowDate: LocalDateTime = now()
-  val expense = Expense("merchant", 10, nowDate, Hardware, "comment", None)
 
   "An Expense" should "reject non positive values" in {
     a [Exception] should be thrownBy {
@@ -18,4 +13,5 @@ class ExpensesTest extends FlatSpec with Matchers {
       expense.copy(total = -10)
     }
   }
+
 }
