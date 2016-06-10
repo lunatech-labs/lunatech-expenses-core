@@ -7,7 +7,7 @@ import play.api.mvc.{Action, AnyContent, Controller}
 
 abstract class CrudController[T <: Entity[T]] extends Controller {
 
-  val repository: Repository[T] = new Repository[T]
+  def repository: Repository[T]
 
   protected def formMapping: Mapping[T]
 

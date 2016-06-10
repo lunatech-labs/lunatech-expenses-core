@@ -3,12 +3,15 @@ package com.lunatech.expenses.controllers
 import java.net.URI
 
 import com.lunatech.expenses.models.{Category, Expense}
+import com.lunatech.expenses.services.Repository
 import com.lunatech.expenses.util.SimpleFormatter._
 import org.joda.time.DateTime
 import play.api.data.Forms._
 import play.api.data.format.Formats._
 
 class ExpenseController extends CrudController[Expense] {
+
+  def repository = Repository.expense
 
   override def formMapping = mapping(
     "merchant" -> text,

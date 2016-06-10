@@ -1,12 +1,16 @@
 package com.lunatech.expenses.controllers
 
 import com.lunatech.expenses.models._
+import com.lunatech.expenses.services.Repository
 import org.joda.time.DateTime
 import play.api.data.Forms._
 import play.api.data.format.Formats._
 import play.api.mvc.{Action, AnyContent}
 
 class ReportController extends CrudController[Report] {
+
+  def repository = Repository.report
+  def expenseRepository = Repository.expense
 
   override def formMapping = mapping(
     "date" -> of(jodaDateTimeFormat)
@@ -19,7 +23,11 @@ class ReportController extends CrudController[Report] {
     Some(entity.submissionDate)
 
   def addExpense(idRep: Int, idExp: Int): Action[AnyContent] = Action {
-    ???
+    val report = repository.find(idRep).get
+    val expense = expenseRepository.find(idExp).get
+    val remainingExpenses = report.expenses.filterNot(_.id.contains(idExp))
+    val updatedExpenses = remainingExpenses :+ expense
+    repository.update(report.copy(expenses = updatedExpenses))
     Ok
   }
 
