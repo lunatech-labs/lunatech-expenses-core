@@ -8,7 +8,6 @@ import com.lunatech.expenses.util.SimpleFormatter._
 import org.joda.time.DateTime
 import play.api.data.Forms._
 import play.api.data.format.Formats._
-import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
 class ExpenseController extends CrudController[Expense] {
@@ -49,14 +48,6 @@ object ExpenseController {
 
   implicit val writesUri: Writes[URI] = JsPath.write[URI]
   implicit val writesCategory: Writes[Category] = JsPath.write[Category]
-  implicit val writesExpense: Writes[Expense] = (
-      (JsPath \ "id").write[Option[Int]] and
-      (JsPath \ "merchant").write[String] and
-      (JsPath \ "total").write[Double] and
-      (JsPath \ "date").write[DateTime] and
-      (JsPath \ "category").write[Category] and
-      (JsPath \ "comment").write[Option[String]] and
-      (JsPath \ "attachment").write[Option[URI]]
-    ) (unlift(Expense.unapply))
+  implicit val writesExpense: Writes[Expense] = Json.writes[Expense]
 
 }
