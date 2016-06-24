@@ -23,8 +23,12 @@ case class Expense(
 
 object Expense {
 
-  implicit val writesUri: Writes[URI] = Writes(uri => JsString(uri.toString))
-  implicit val writesCategory: Writes[Category] = Writes(category => JsString("bla"))
+  implicit val writesUri: Writes[URI] = Writes {
+    uri => JsString(uri.toString)
+  }
+  implicit val writesCategory: Writes[Category] = Writes {
+    category => JsString(Category.toString(category))
+  }
   implicit val writesExpense = Json.writes[Expense]
 
 }

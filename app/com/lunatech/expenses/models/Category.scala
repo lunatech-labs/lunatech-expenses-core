@@ -18,4 +18,12 @@ object Category {
     case "Phone" => Phone
   }
 
+  def toString(category: Category): String = category match {
+    case Travel => "Travel"
+    case Food => "Food"
+    case Hardware => "Hardware"
+    case Software => "Software"
+    case Phone => "Phone"
+  }
+
 }
