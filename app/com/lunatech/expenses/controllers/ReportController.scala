@@ -5,6 +5,8 @@ import com.lunatech.expenses.services.Repository
 import org.joda.time.DateTime
 import play.api.data.Forms._
 import play.api.data.format.Formats._
+import play.api.libs.functional.syntax._
+import play.api.libs.json.{JsObject, JsPath, Json, Writes}
 import play.api.mvc.{Action, AnyContent}
 
 class ReportController extends CrudController[Report] {
@@ -16,6 +18,14 @@ class ReportController extends CrudController[Report] {
     "date" -> of(jodaDateTimeFormat)
   )(marshall)(unmarshall)
 
+  override def toJson(report: Report): JsObject = {
+    Json.obj(
+      "id" -> report.id,
+      "expenses" -> report.expenses.toString(),
+      "submissionDate" -> report.submissionDate,
+      "user" -> report.user.toString
+    )
+  }
   private def marshall(date: DateTime): Report =
     Report(None, Seq(), date, User("", "", ""))
 
@@ -30,5 +40,18 @@ class ReportController extends CrudController[Report] {
     repository.update(report.copy(expenses = updatedExpenses))
     Ok
   }
+
+}
+
+object ReportController {
+
+  implicit val writesExpense = ExpenseController.writesExpense
+  implicit val writesUser = UserController.writesUser
+  implicit val writesReport: Writes[Report] = (
+      (JsPath \ "id").write[Option[Int]] and
+      (JsPath \ "expenses").write[Seq[Expense]] and
+      (JsPath \ "submissionDate").write[DateTime] and
+      (JsPath \ "user").write[User]
+    ) (unlift(Report.unapply))
 
 }

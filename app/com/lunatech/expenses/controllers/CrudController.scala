@@ -3,6 +3,7 @@ package com.lunatech.expenses.controllers
 import com.lunatech.expenses.models.Entity
 import com.lunatech.expenses.services.Repository
 import play.api.data.{Form, Mapping}
+import play.api.libs.json.{JsObject, Json}
 import play.api.mvc.{Action, AnyContent, Controller}
 
 abstract class CrudController[T <: Entity[T]] extends Controller {
@@ -21,13 +22,16 @@ abstract class CrudController[T <: Entity[T]] extends Controller {
   }
 
   def list: Action[AnyContent] = Action {
-    Ok(repository.list.toString)
+    val seqOfJs: Seq[JsObject] = repository.list.map(toJson)
+    Ok(Json.toJson(seqOfJs))
   }
 
   def find(id: Int): Action[AnyContent] = Action { request =>
     repository.find(id).map{
-      e => Ok(e.toString)
+      e => Ok(toJson(e))
     }.getOrElse(NotFound)
   }
+
+  def toJson(entity: T): JsObject
 
 }
