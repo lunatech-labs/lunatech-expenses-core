@@ -1,6 +1,7 @@
 package com.lunatech.expenses.models
 
 import org.joda.time.DateTime
+import play.api.libs.json.Json
 
 case class Report(
                    id: Option[Int] = None,
@@ -18,4 +19,12 @@ case class Report(
   }
 
   override def withId(id: Int): Report = this.copy(id = Some(id))
+}
+
+object Report {
+
+  implicit val writesExpense = Expense.writesExpense
+  implicit val writesUser = User.writesUser
+  implicit val writesReport = Json.writes[Report]
+
 }
