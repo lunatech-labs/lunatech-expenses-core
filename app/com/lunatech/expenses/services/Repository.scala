@@ -1,6 +1,6 @@
 package com.lunatech.expenses.services
 
-import com.lunatech.expenses.models.{Entity, Expense, Report}
+import com.lunatech.expenses.models.{Entity, Expense, Report, User}
 
 import scala.collection.mutable
 
@@ -28,4 +28,5 @@ class Repository[T <: Entity[T]] {
 object Repository {
   val expense = new Repository[Expense]
   val report = new Repository[Report]
+  val user = new Repository[User]
 }

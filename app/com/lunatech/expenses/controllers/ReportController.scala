@@ -17,7 +17,7 @@ class ReportController extends CrudController[Report] {
   )(marshall)(unmarshall)
 
   private def marshall(date: DateTime): Report =
-    Report(None, Seq(), date, User("", "", ""))
+    Report(None, Seq(), date, User(None, "", ""))
 
   private def unmarshall(entity: Report): Option[(DateTime)] =
     Some(entity.submissionDate)

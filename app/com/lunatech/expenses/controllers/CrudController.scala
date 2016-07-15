@@ -17,7 +17,7 @@ abstract class CrudController[T <: Entity[T] : Writes] extends Controller {
       form => BadRequest(s"Binding failed '${form.errors}'"),
       entity => {
         repository add entity
-        Ok
+        Ok(Json.toJson(entity))
       })
   }
 
